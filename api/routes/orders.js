@@ -1,33 +1,16 @@
+
 const express = require('express');
-
 const router = express.Router();
+const tokenverify=require('../middleware/tokenverify');
 
-router.get('/',function(req,res){
+const orderscontroller=require('../controller/orders.controller');
 
-    
-    //res.status(200).send({'Message':'/orders Get request.'})
-});
+router.get('/getOrders',tokenverify,orderscontroller.getOrders );
 
-router.get('/:orderId',function(req,res,next){
-    if(req.params.orderId=='1'){
-        res.status(200).send({'Message':'/orders1 Get request.'})
-    }
-    else{
-        res.status(200).send({'Message':'/orders2 Get request.'})
-    }
-});
+router.get('/getOrderById/:orderId',tokenverify,orderscontroller.getOrderById);
 
-router.post('/',function(req,res){
-    res.status(200).send({'Message':'/orders Post request.'})
-});
+router.post('/addOrder',tokenverify,orderscontroller.addOrder);
 
-router.patch('/',function(req,res){
-    res.status(200).send({'Message':'/orders patch request.'})
-});
-
-
-router.delete('/',function(req,res){
-    res.status(200).send({'Message':'/orders delete request.'})
-});
+router.delete('/deleteOrder',tokenverify,orderscontroller.deleteOrder);
 
 module.exports=router;
